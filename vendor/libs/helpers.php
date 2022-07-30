@@ -1,5 +1,6 @@
 <?php
 
 function dd($ex) {
-    die('<pre>' . print_r($ex, true) . '</pre>');
+    echo '<pre>' . print_r($ex, true) . '</pre>';
+    die;
 }

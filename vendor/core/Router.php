@@ -4,37 +4,40 @@
         protected static $routes = [];
         protected static $route = [];
 
-        public static function add($regexp, $route = []) {
-            self::$routes[$regexp] = $route;
-        }
-
-        public static function getRoutes() {
-            return self::$routes;
-        }
-
-        public static function getRoute() {
-            return self::$route;
-        }
-
-        public static function parseRoute($url) {
-            foreach(self::$routes as $pattern => &$route){
-                if(preg_match("#$pattern#i", $url, $matches)){
-                    foreach($matches as $key => $value){
-                        if(is_string($key)){
-                            $route[$key] = $value;
-                        }
-                    }
-                    $route['action'] ??= 'index';
-                    self::$route = $route;
+        private static function parseRoute($url) 
+        {
+            foreach(self::$routes as $uri => &$controller){
+                if($uri === $url){
+                    $partController = explode('@', $controller);
+                    self::$route['controller'] = $partController[0];
+                    self::$route['action'] = $partController[1];
                     return true;
                 }
             }
+
             return false;
         }
 
-        public static function dispatch($url) {
+        public static function add($regexp, string $route) 
+        {
+            $regexp = trim($regexp, '/');
+            self::$routes[$regexp] = $route;
+        }
+
+        public static function getRoutes() 
+        {
+            return self::$routes;
+        }
+
+        public static function getRoute() 
+        {
+            return self::$route;
+        }
+
+        public static function dispatch($url) 
+        {
             if (self::parseRoute($url)) {
-                $controllerName = self::$route['controller'] . 'Controller';
+                $controllerName = self::$route['controller'];
                 if (class_exists($controllerName)) {
                     $controller = new $controllerName;
 

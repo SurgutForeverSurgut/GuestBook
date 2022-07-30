@@ -2,7 +2,8 @@
 
 class MainController extends BaseController
 {
-    public function index(){
+    public function index()
+    {
         echo 'MainController::index()';
     }
     
