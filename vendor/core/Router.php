@@ -1,8 +1,10 @@
 <?php
+
+    namespace vendor\core;
     class Router 
     {
-        protected static $routes = [];
-        protected static $route = [];
+        protected static array $routes = [];
+        protected static array $route = [];
 
         private static function parseRoute($url) 
         {
@@ -37,9 +39,9 @@
         public static function dispatch($url) 
         {
             if (self::parseRoute($url)) {
-                $controllerName = self::$route['controller'];
+                $controllerName = 'app\\controllers\\' . self::$route['controller'];
                 if (class_exists($controllerName)) {
-                    $controller = new $controllerName;
+                    $controller = new $controllerName(self::$route);
 
                     $actionName = self::$route['action'];
                     if (method_exists($controller, $actionName)) {
