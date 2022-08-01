@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\core;
+namespace core;
 
 class View
 {
@@ -17,11 +17,17 @@ class View
         }
         $content = ob_get_clean();
 
-        if (is_file($layout)) {
-            require $layout;
-        } else {
-            echo "<h1>Не найден шаблон {$layout}</h1>";
+        if($layout){
+            if ($layout && is_file($layout)) {
+                require $layout;
+                return;
+            } else {
+                echo "<h1>Не найден шаблон {$layout}</h1>";
+                return;
+            }
         }
+        require $file_view;
+        return;
         
     }
 }

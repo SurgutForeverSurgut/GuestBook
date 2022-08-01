@@ -1,7 +1,7 @@
 <?php
 
-use vendor\core\Router;
+use core\Router;
 
-Router::add('/', 'MainController@index');
-Router::add('/book', 'BookController@index');
-Router::add('/book/add/', 'BookController@add');
+Router::add('/', 'BookController@index');
+Router::add('/book', 'BookController@add');
+Router::add('/table', 'BookController@getTable');

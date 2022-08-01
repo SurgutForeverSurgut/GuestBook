@@ -1,14 +1,12 @@
 <?php
 error_reporting(-1);
-use vendor\core\Router;
-use vendor\core\Controller;
-
-$query = trim($_SERVER['QUERY_STRING'], '/');
+use core\Router;
 
 define('BASE_URL', __DIR__);
-define('CORE', dirname(__DIR__) . '/vendor/core/');
-define('LIBS', dirname(__DIR__) . '/vendor/libs/');
+define('CORE', dirname(__DIR__) . '/core/');
+define('LIBS', dirname(__DIR__) . '/libs/');
 define('ROOT', dirname(__DIR__) . '/');
+define('CONFIG', ROOT . 'config/');
 define('APP', dirname(__DIR__) . '/app/');
 define('CONTROLLERS', '/app/controllers/');
 define('MODELS', APP . '/models/');
@@ -25,6 +23,4 @@ spl_autoload_register(function($class) {
 require LIBS . 'helpers.php';
 require APP . 'routes.php';
 
-
-
-Router::dispatch($query);
+Router::dispatch();

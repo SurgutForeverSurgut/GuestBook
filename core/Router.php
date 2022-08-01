@@ -1,6 +1,6 @@
 <?php
 
-    namespace vendor\core;
+    namespace core;
     class Router 
     {
         protected static array $routes = [];
@@ -16,7 +16,6 @@
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -36,8 +35,10 @@
             return self::$route;
         }
 
-        public static function dispatch($url) 
+        public static function dispatch() 
         {
+            $url = trim($_SERVER['QUERY_STRING'], '/');
+
             if (self::parseRoute($url)) {
                 $controllerName = 'app\\controllers\\' . self::$route['controller'];
                 if (class_exists($controllerName)) {
@@ -60,7 +61,20 @@
             
         }
 
-        
+        public static function get($var = null)
+        {
+            if(isset($_GET[$var])){
+                return $_GET[$var];
+            }
+            return $_GET;
+        }
 
+        public static function post($var = null)
+        {
+            if(isset($_POST[$var])){
+                return $_POST[$var];
+            }
+            return $_POST;
+        }
         
     }
